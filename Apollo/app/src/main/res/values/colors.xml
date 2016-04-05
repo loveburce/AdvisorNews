@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="youdao_title_bg">#318ece</color>
+    <color name="title_color">#ffffff</color>
+    <color name="white">#ffffff</color>
+
+    <color name="title_text_color">#ffffffff</color>
 </resources>
