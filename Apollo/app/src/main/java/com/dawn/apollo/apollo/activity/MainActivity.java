@@ -26,7 +26,7 @@ import com.dawn.apollo.apollo.fragment.Fragment2;
 import com.dawn.apollo.apollo.fragment.Fragment3;
 import com.dawn.apollo.apollo.fragment.Fragment4;
 
-public class MainActivity extends FragmentActivity implements
+public class MainActivity extends BaseActivity implements
         OnPageChangeListener, OnTabChangeListener {
 
     private FragmentTabHost mTabHost;
