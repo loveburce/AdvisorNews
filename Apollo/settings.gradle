@@ -1,2 +1,2 @@
 include ':app'
-//include ':library:viewPager'
+//project(':canrefresh').projectDir = new File('library/canrefresh')

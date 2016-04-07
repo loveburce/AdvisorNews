@@ -4,14 +4,10 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/subscribe_activity_bg" >
-    <include
-        android:id="@+id/title_bar"
-        layout="@layout/title_bar" />
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/title_bar" >
+        android:layout_height="fill_parent">
 
         <LinearLayout
             android:id="@+id/subscribe_main_layout"
@@ -31,22 +27,25 @@
 
                 <TextView
                     android:id="@+id/my_category_text"
-                    style="@style/subscribe_my_tip_text"
-                    android:text="@string/subscribe_my_category" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我关注的科目" />
 
                 <TextView
                     android:id="@+id/my_category_tip_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12.0dip"
-                    android:text="@string/subscribe_manager_category_info_2"
+                    android:text="经济"
                     android:textColor="@color/subscribe_tip_text"
                     android:textSize="11.0sp" />
             </LinearLayout>
 
             <View
                 android:id="@+id/seperate_line"
-                style="@style/subscribe_seperate_line" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ff00"/>
 
             <com.tiger.quicknews.wedget.DragGrid
                 android:id="@+id/userGridView"
@@ -64,15 +63,11 @@
 
             <View
                 android:id="@+id/seperate_line2"
-                style="@style/subscribe_seperate_line" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#00ff00"/>
 
-            <TextView
-                android:id="@+id/more_category_text"
-                style="@style/subscribe_my_tip_text"
-                android:textSize="13sp"
-                android:layout_marginBottom="14.0dip"
-                android:layout_marginLeft="10.0dip"
-                android:text="@string/subscribe_more_category" />
+
 
             <com.tiger.quicknews.wedget.OtherGridView
                 android:id="@+id/otherGridView"
