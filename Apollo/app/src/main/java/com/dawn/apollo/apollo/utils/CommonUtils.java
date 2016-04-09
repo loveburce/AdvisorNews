@@ -5,26 +5,15 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.dawn.apollo.apollo.BuildConfig;
+import com.dawn.apollo.apollo.application.MyApplication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.zhangyanye.freewalker.BuildConfig;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import application.FreeWalkerApplication;
 
-/**
- * Created by zhangyanye on 2015/8/23
- * Description:工具集合
- * 1.toast
- * 2.Log
- * 3.gson
- * 4.获取app版本�?
- * 5.MD5加密
- * 6.dp转px
- * 7.px转dp
- */
 public class CommonUtils {
 
     public static Gson gson = new GsonBuilder()
@@ -34,7 +23,7 @@ public class CommonUtils {
             .create();
 
     public static void showToast(String content, int time) {
-        Toast.makeText(FreeWalkerApplication.getApp(), content, time).show();
+        Toast.makeText(MyApplication.getApp(), content, time).show();
     }
 
     public static void showToast(String content) {
@@ -48,8 +37,8 @@ public class CommonUtils {
 
     public static int getAppVersion() {
         try {
-            PackageInfo info = FreeWalkerApplication.getApp().getPackageManager().getPackageInfo
-                    (FreeWalkerApplication.getApp().getPackageName(), 0);
+            PackageInfo info = MyApplication.getApp().getPackageManager().getPackageInfo
+                    (MyApplication.getApp().getPackageName(), 0);
             return info.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -77,19 +66,14 @@ public class CommonUtils {
         return cacheKey;
     }
 
-    /**
-     * 根据手机的分辨率�? dp 的单�? 转成�? px(像素)
-     */
     public static int dipTopx(float dpValue) {
-        final float scale = FreeWalkerApplication.getApp().getResources().getDisplayMetrics().density;
+        final float scale = MyApplication.getApp().getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
 
-    /**
-     * 根据手机的分辨率�? px(像素) 的单�? 转成�? dp
-     */
+
     public static int pxTodip(float pxValue) {
-        final float scale = FreeWalkerApplication.getApp().getResources().getDisplayMetrics().density;
+        final float scale = MyApplication.getApp().getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
 }
