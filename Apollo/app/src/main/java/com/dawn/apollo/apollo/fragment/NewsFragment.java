@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.dawn.apollo.apollo.R;
 
 public class NewsFragment extends Fragment {
+
 	String text;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

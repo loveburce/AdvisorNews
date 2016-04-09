@@ -47,5 +47,7 @@
         <item name="android:textColor">@color/title_text_color</item>
     </style>
 
-
+    <style name="myProgressBarStyleLarge">
+        　　        <item name="android:indeterminateDrawable">@drawable/progress_large_white</item>
+    </style>
 </resources>

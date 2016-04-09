@@ -1,4 +1,4 @@
-package com.dawn.apollo.apollo.http;
+package com.dawn.apollo.apollo.config;
 
 /**
  * Created by dawn-pc on 2016/3/31.
