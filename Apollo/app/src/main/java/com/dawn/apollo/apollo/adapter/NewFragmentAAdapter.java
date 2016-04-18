@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dawn.apollo.apollo.R;
 import com.dawn.apollo.apollo.datamodel.NewInfo;
 
 import java.util.ArrayList;
@@ -22,8 +23,9 @@ public class NewFragmentAAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<NewInfo> newInfoList;
     private LayoutInflater mInflater;
 
-    private static final int ITEM_VIEW = 1;
-    private static final int FOOT_VIEW = 2;
+    private static final int TEXT_VIEW = 1;
+    private static final int IMAG_VIEW = 2;
+    private static final int FOOT_VIEW = 3;
 
     public NewFragmentAAdapter(Context context, List<NewInfo> mNewList){
         this.mContext = context;
@@ -34,13 +36,16 @@ public class NewFragmentAAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        if (viewType == ITEM_VIEW) {
-//            final View view = mInflater.inflate(R.layout.advance_com_instance_item_layout, parent, false);
-//            return new ItemViewHolder(view);
-//        } else if (viewType == FOOT_VIEW) {
+        if (viewType == TEXT_VIEW) {
+            final View view = mInflater.inflate(R.layout.adapter_news_text, parent, false);
+            return new ItemViewHolder(view);
+        } else if (viewType == IMAG_VIEW) {
+            View view = mInflater.inflate(R.layout.adapter_news_picture, parent, false);
+            return new FootViewHolder(view);
+        }else if (viewType == FOOT_VIEW) {
 //            View view = mInflater.inflate(R.layout.instance_load_more_layout, parent, false);
 //            return new FootViewHolder(view);
-//        }
+        }
         return null;
     }
 
