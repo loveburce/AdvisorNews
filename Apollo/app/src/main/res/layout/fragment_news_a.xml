@@ -8,16 +8,16 @@
     android:background="@color/white"
     tools:context="com.tiger.quicknews.activity.MainActivity">
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <ListView
-            android:id="@+id/listview"
-            android:layout_width="match_parent"
+        android:id="@+id/demo_swiperefreshlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="vertical"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/demo_recycler"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginTop="48dp" />
-
+            ></android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
     <ProgressBar
         android:id="@+id/progressBar"
