@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by dawn-pc on 2016/4/18.
  */
-public class NewFragmentAAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class NewFragmentAAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<NewInfo> newInfoList;
     private LayoutInflater mInflater;
@@ -38,54 +38,26 @@ public class NewFragmentAAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TEXT_VIEW) {
             final View view = mInflater.inflate(R.layout.adapter_news_text, parent, false);
-            return new ItemViewHolder(view);
+            return new TextViewHolder(view);
         } else if (viewType == IMAG_VIEW) {
             View view = mInflater.inflate(R.layout.adapter_news_picture, parent, false);
-            return new FootViewHolder(view);
+            return new ImageViewHolder(view);
         }else if (viewType == FOOT_VIEW) {
-//            View view = mInflater.inflate(R.layout.instance_load_more_layout, parent, false);
-//            return new FootViewHolder(view);
+            View view = mInflater.inflate(R.layout.adapter_load_more, parent, false);
+            return new FootViewHolder(view);
         }
         return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//        if(holder instanceof ItemViewHolder){
-//            AdvanceInstanceBean advanceInstanceBean=mAdvanceInstanceBeans.get(position);
-//            if(advanceInstanceBean!=null){
-//                final List<InstanceBean> instanceBeans=advanceInstanceBean.getInstanceBeans();
-//                if(instanceBeans.size()==2){
-//                    ((ItemViewHolder) holder).item_img_one.setImageResource(instanceBeans.get(0).getImg());
-//                    ((ItemViewHolder)holder).item_tv_one.setText(instanceBeans.get(0).getTitle());
-//                    ((ItemViewHolder) holder).item_img_two.setImageResource(instanceBeans.get(1).getImg());
-//                    ((ItemViewHolder)holder).item_tv_two.setText(instanceBeans.get(1).getTitle());
-//                    ((ItemViewHolder) holder).leftL.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            if (onItemClickListener != null) {
-//                                onItemClickListener.onItemClick(instanceBeans.get(0));
-//                            }
-//                        }
-//                    });
-//                    ((ItemViewHolder) holder).rightL.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            if(onItemClickListener!=null){
-//                                onItemClickListener.onItemClick(instanceBeans.get(1));
-//                            }
-//                        }
-//                    });
-//                }else {
-//                    ((ItemViewHolder) holder).item_img_one.setImageResource(instanceBeans.get(0).getImg());
-//                    ((ItemViewHolder)holder).item_tv_one.setText(instanceBeans.get(0).getTitle());
-//                    ((ItemViewHolder) holder).item_img_two.setImageResource(R.drawable.moren);
-//                    ((ItemViewHolder)holder).item_tv_two.setText("");
-//                }
-//            }
-//        }else if(holder instanceof FootViewHolder){
-//            //上拉加载更多布局数据绑定
-//        }
+        if(holder instanceof TextViewHolder){
+
+        }else if(holder instanceof ImageViewHolder){
+
+        }else if(holder instanceof FootViewHolder){
+            //上拉加载更多布局数据绑定
+        }
     }
 
     @Override
@@ -98,34 +70,46 @@ public class NewFragmentAAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if(position+1 == getItemCount()){
             return FOOT_VIEW;
         }else{
-            return ITEM_VIEW;
+            if(newInfoList.get(position).getType().equals(TEXT_VIEW)){
+                return TEXT_VIEW;
+            }else{
+                return IMAG_VIEW;
+            }
         }
     }
 
-    public static class ItemViewHolder extends RecyclerView.ViewHolder{
-        private LinearLayout leftL,rightL;
-        private ImageView item_img_one;
-        private TextView item_tv_one;
-        private ImageView item_img_two;
-        private TextView item_tv_two;
-        public ItemViewHolder(View itemView) {
+    public static class TextViewHolder extends RecyclerView.ViewHolder{
+        private ImageView iv_image;
+        private TextView tv_title;
+        private TextView tv_content;
+        public TextViewHolder(View itemView) {
             super(itemView);
-//            leftL=(LinearLayout)itemView.findViewById(R.id.leftL);
-//            rightL=(LinearLayout)itemView.findViewById(R.id.rightL);
-//            item_img_one=(ImageView)itemView.findViewById(R.id.item_img_one);
-//            item_tv_one=(TextView)itemView.findViewById(R.id.item_tv_one);
-//            item_img_two=(ImageView)itemView.findViewById(R.id.item_img_two);
-//            item_tv_two=(TextView)itemView.findViewById(R.id.item_tv_two);
+            iv_image=(ImageView)itemView.findViewById(R.id.adapter_news_text_image);
+            tv_title=(TextView)itemView.findViewById(R.id.adapter_news_text_title);
+            tv_content=(TextView)itemView.findViewById(R.id.adapter_news_text_content);
         }
     }
-    /**
-     * 底部FootView布局
-     */
+
+    public static class ImageViewHolder extends RecyclerView.ViewHolder{
+        private TextView tv_title;
+        private ImageView iv_imageOne;
+        private ImageView iv_imageTwo;
+        private ImageView iv_imageThree;
+
+        public ImageViewHolder(View itemView) {
+            super(itemView);
+            tv_title=(TextView)itemView.findViewById(R.id.adapter_news_text_title);
+            iv_imageOne=(ImageView)itemView.findViewById(R.id.adapter_news_image_one);
+            iv_imageTwo=(ImageView)itemView.findViewById(R.id.adapter_news_image_two);
+            iv_imageThree=(ImageView)itemView.findViewById(R.id.adapter_news_image_three);
+        }
+    }
+
     public static class FootViewHolder extends  RecyclerView.ViewHolder{
         private TextView foot_view_item_tv;
         public FootViewHolder(View view) {
             super(view);
-//            foot_view_item_tv=(TextView)view.findViewById(R.id.foot_view_item_tv);
+            foot_view_item_tv=(TextView)view.findViewById(R.id.foot_view_item_tv);
         }
     }
     /**
@@ -148,5 +132,18 @@ public class NewFragmentAAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void addMoreBeans(List<NewInfo> pInstanceBeans){
 //        mAdvanceInstanceBeans.addAll(pInstanceBeans);
         notifyDataSetChanged();
+    }
+
+
+    public interface OnItemClickListener {
+        void onItemClick(Object o);
+    }
+    private OnItemClickListener onItemClickListener;
+
+    public OnItemClickListener getOnItemClickListener() {
+        return onItemClickListener;
+    }
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }

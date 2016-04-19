@@ -179,7 +179,7 @@ public class HotNewsFragmentA extends Fragment {
 		for(int i = 0; i< count;i++){
 			Bundle data = new Bundle();
 			data.putString("text", newsClassify.get(i).getTitle());
-			NewsFragmentB newfragment = new NewsFragmentB();
+			NewsFragmentA newfragment = new NewsFragmentA();
 			newfragment.setArguments(data);
 			fragments.add(newfragment);
 		}

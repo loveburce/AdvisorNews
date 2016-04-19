@@ -1,4 +1,5 @@
 package com.dawn.apollo.apollo.http;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.HttpStack;
@@ -14,7 +15,6 @@ import com.squareup.okhttp.ResponseBody;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ProtocolVersion;
-import org.apache.http.StatusLine;
 import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicHttpResponse;
@@ -24,66 +24,62 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Created by dawn-pc on 2016/4/19.
+ */
+public class OkHttpStackT implements HttpStack {
+    private final OkHttpClient mOkHttpClient;
 
-public class OkHttpStackO implements HttpStack
-{
-    private final OkHttpClient mClient;
-
-    public OkHttpStackO(OkHttpClient client)
-    {
-        this.mClient = client;
+    public OkHttpStackT(OkHttpClient okHttpClient) {
+        if (okHttpClient == null) {
+            throw new IllegalArgumentException("OkHttpClient can't be null");
+        }
+        mOkHttpClient = okHttpClient;
     }
 
     @Override
-    public HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders)
-            throws IOException, AuthFailureError
-    {
-        OkHttpClient client = mClient.clone();
+    public HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders) throws IOException, AuthFailureError {
+        OkHttpClient client = mOkHttpClient;
         int timeoutMs = request.getTimeoutMs();
         client.setConnectTimeout(timeoutMs, TimeUnit.MILLISECONDS);
         client.setReadTimeout(timeoutMs, TimeUnit.MILLISECONDS);
         client.setWriteTimeout(timeoutMs, TimeUnit.MILLISECONDS);
 
-        com.squareup.okhttp.Request.Builder okHttpRequestBuilder =
-                new com.squareup.okhttp.Request.Builder();
-        okHttpRequestBuilder.url(request.getUrl());
+        com.squareup.okhttp.Request.Builder builder = new com.squareup.okhttp.Request.Builder();
+        builder.url(request.getUrl());
 
         Map<String, String> headers = request.getHeaders();
 
-        for (final String name : headers.keySet())
-        {
-            okHttpRequestBuilder.addHeader(name, headers.get(name));
+        for (String name : headers.keySet()) {
+            builder.addHeader(name, headers.get(name));
         }
 
-        for (final String name : additionalHeaders.keySet())
-        {
-            okHttpRequestBuilder.addHeader(name, additionalHeaders.get(name));
+        for (String name : additionalHeaders.keySet()) {
+            builder.addHeader(name, additionalHeaders.get(name));
         }
 
-        setConnectionParametersForRequest(okHttpRequestBuilder, request);
+        setConnectionParametersForRequest(builder, request);
+        com.squareup.okhttp.Request okRequest = builder.build();
 
-        com.squareup.okhttp.Request okHttpRequest = okHttpRequestBuilder.build();
-        Call okHttpCall = client.newCall(okHttpRequest);
-        Response okHttpResponse = okHttpCall.execute();
+        Call call = client.newCall(okRequest);
+        Response okresponse = call.execute();
 
-        StatusLine responseStatus = new BasicStatusLine
-                (
-                        parseProtocol(okHttpResponse.protocol()),
-                        okHttpResponse.code(),
-                        okHttpResponse.message()
-                );
+        BasicStatusLine responseStatus = new BasicStatusLine(
+                parseProtocol(okresponse.protocol()),
+                okresponse.code(),
+                okresponse.message()
+        );
 
         BasicHttpResponse response = new BasicHttpResponse(responseStatus);
-        response.setEntity(entityFromOkHttpResponse(okHttpResponse));
+        response.setEntity(entityFromOkHttpResponse(okresponse));
+        Headers responseHeaders = okresponse.headers();
 
-        Headers responseHeaders = okHttpResponse.headers();
-
-        for (int i = 0, len = responseHeaders.size(); i < len; i++)
-        {
-            final String name = responseHeaders.name(i), value = responseHeaders.value(i);
-
-            if (name != null)
-            {
+        int size = responseHeaders.size();
+        String name = null;
+        String value = null;
+        for (int i = 0; i < size; i++) {
+            name = responseHeaders.name(i);
+            if (name != null) {
                 response.addHeader(new BasicHeader(name, value));
             }
         }
@@ -91,8 +87,7 @@ public class OkHttpStackO implements HttpStack
         return response;
     }
 
-    private static HttpEntity entityFromOkHttpResponse(Response r) throws IOException
-    {
+    private static HttpEntity entityFromOkHttpResponse(Response r) throws IOException {
         BasicHttpEntity entity = new BasicHttpEntity();
         ResponseBody body = r.body();
 
@@ -100,73 +95,51 @@ public class OkHttpStackO implements HttpStack
         entity.setContentLength(body.contentLength());
         entity.setContentEncoding(r.header("Content-Encoding"));
 
-        if (body.contentType() != null)
-        {
+        if (body.contentType() != null) {
             entity.setContentType(body.contentType().type());
         }
         return entity;
     }
 
-    @SuppressWarnings("deprecation")
-    private static void setConnectionParametersForRequest
-            (com.squareup.okhttp.Request.Builder builder, Request<?> request)
-            throws IOException, AuthFailureError
-    {
-        switch (request.getMethod())
-        {
+    static void setConnectionParametersForRequest(com.squareup.okhttp.Request.Builder builder, Request<?> request) throws IOException, AuthFailureError {
+        switch (request.getMethod()) {
             case Request.Method.DEPRECATED_GET_OR_POST:
-                // Ensure backwards compatibility.
-                // Volley assumes a request with a null body is a GET.
                 byte[] postBody = request.getPostBody();
-
-                if (postBody != null)
-                {
-                    builder.post(RequestBody.create
-                            (MediaType.parse(request.getPostBodyContentType()), postBody));
+                if (postBody != null) {
+                    builder.post(RequestBody.create(MediaType.parse(request.getPostBodyContentType()), postBody));
                 }
                 break;
-
             case Request.Method.GET:
                 builder.get();
                 break;
-
             case Request.Method.DELETE:
                 builder.delete();
                 break;
-
             case Request.Method.POST:
                 builder.post(createRequestBody(request));
                 break;
-
             case Request.Method.PUT:
                 builder.put(createRequestBody(request));
                 break;
-
             case Request.Method.HEAD:
                 builder.head();
                 break;
-
             case Request.Method.OPTIONS:
                 builder.method("OPTIONS", null);
                 break;
-
             case Request.Method.TRACE:
                 builder.method("TRACE", null);
                 break;
-
             case Request.Method.PATCH:
                 builder.patch(createRequestBody(request));
                 break;
-
             default:
                 throw new IllegalStateException("Unknown method type.");
         }
     }
 
-    private static ProtocolVersion parseProtocol(final Protocol p)
-    {
-        switch (p)
-        {
+    private static ProtocolVersion parseProtocol(final Protocol p) {
+        switch (p) {
             case HTTP_1_0:
                 return new ProtocolVersion("HTTP", 1, 0);
             case HTTP_1_1:
@@ -180,8 +153,7 @@ public class OkHttpStackO implements HttpStack
         throw new IllegalAccessError("Unkwown protocol");
     }
 
-    private static RequestBody createRequestBody(Request r) throws AuthFailureError
-    {
+    private static RequestBody createRequestBody(Request r) throws AuthFailureError {
         final byte[] body = r.getBody();
         if (body == null) return null;
 

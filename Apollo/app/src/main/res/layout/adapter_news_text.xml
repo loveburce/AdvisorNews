@@ -11,7 +11,7 @@
         android:paddingRight="7.0dip" >
 
         <ImageView
-            android:id="@+id/left_image"
+            android:id="@+id/adapter_news_text_image"
             android:layout_width="@dimen/right_image_width"
             android:layout_height="@dimen/right_image_height"
             android:layout_alignParentLeft="true"
@@ -23,21 +23,21 @@
             android:scaleType="centerCrop" />
 
         <TextView
-            android:id="@+id/item_title"
+            android:id="@+id/adapter_news_text_title"
             style="@style/item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="12dp"
             android:singleLine="true"
-            android:layout_toRightOf="@+id/left_image" />
+            android:layout_toRightOf="@+id/adapter_news_text_image" />
 
         <TextView
-            android:id="@+id/item_content"
+            android:id="@+id/adapter_news_text_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/item_content"
-            android:layout_alignLeft="@+id/item_title"
+            android:layout_alignLeft="@+id/adapter_news_text_title"
             android:maxLines="2"
             android:layout_marginTop="35dp" />
     </RelativeLayout>

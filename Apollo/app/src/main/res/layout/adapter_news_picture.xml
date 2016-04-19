@@ -5,7 +5,7 @@
     android:layout_height="70dp">
 
     <TextView
-        android:id="@+id/item_abstract"
+        android:id="@+id/adapter_news_image_title"
         style="@style/item_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -22,19 +22,19 @@
         android:paddingRight="8.0dip" >
 
         <ImageView
-            android:id="@+id/item_image_0"
+            android:id="@+id/adapter_news_image_one"
             style="@style/item_image" />
 
         <View style="@style/item_image_gap" />
 
         <ImageView
-            android:id="@+id/item_image_1"
+            android:id="@+id/adapter_news_image_two"
             style="@style/item_image" />
 
         <View style="@style/item_image_gap" />
 
         <ImageView
-            android:id="@+id/item_image_2"
+            android:id="@+id/adapter_news_image_three"
             style="@style/item_image" />
     </LinearLayout>
 
