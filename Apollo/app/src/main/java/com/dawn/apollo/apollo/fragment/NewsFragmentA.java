@@ -27,7 +27,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewsFragmentA extends Fragment {
+public class NewsFragmentA extends BaseFragment {
 	private LinearLayout ll_topBarLinearBack;
 	private TextView tv_topBarTitle;
 	private RecyclerView recyclerView;
@@ -59,7 +59,7 @@ public class NewsFragmentA extends Fragment {
 	}
 
 	private void getNewsData(){
-		String httpurl = "";
+		String httpurl = getCommonUrl("","");
 		HttpClientRequest httpClientRequest = HttpClientRequest.getInstance(getActivity());
 		StringRequest stringRequest = new StringRequest(Request.Method.POST,httpurl,
 				new Response.Listener<String>() {

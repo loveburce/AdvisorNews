@@ -42,4 +42,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.5.0'
     compile 'com.mcxiaoke.volley:library:1.0.19'
 
+    compile 'com.snappydb:snappydb-lib:0.5.2'
+    compile 'com.esotericsoftware.kryo:kryo:2.24.0'
+
 }

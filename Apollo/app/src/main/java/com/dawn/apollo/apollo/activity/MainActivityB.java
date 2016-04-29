@@ -61,8 +61,7 @@ public class MainActivityB extends AppCompatActivity implements
         int count = textViewArray.length;
 
         for (int i = 0; i < count; i++) {
-            TabSpec tabSpec = mTabHost.newTabSpec(textViewArray[i])
-                    .setIndicator(getTabItemView(i));
+            TabSpec tabSpec = mTabHost.newTabSpec(textViewArray[i]).setIndicator(getTabItemView(i));
             mTabHost.addTab(tabSpec, fragmentArray[i], null);
             mTabHost.setTag(i);
         }
@@ -85,8 +84,7 @@ public class MainActivityB extends AppCompatActivity implements
 
     private View getTabItemView(int i) {
         View view = layoutInflater.inflate(R.layout.tab_content, null);
-        ImageView mImageView = (ImageView) view
-                .findViewById(R.id.tab_imageview);
+        ImageView mImageView = (ImageView) view.findViewById(R.id.tab_imageview);
         TextView mTextView = (TextView) view.findViewById(R.id.tab_textview);
         mImageView.setBackgroundResource(imageViewArray[i]);
         mTextView.setText(textViewArray[i]);
