@@ -1,5 +1,5 @@
 
-package com.dawn.apollo.apollo.datamodel;
+package com.dawn.apollo.apollo.bean;
 
 import java.io.Serializable;
 

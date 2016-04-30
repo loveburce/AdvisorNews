@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.dawn.apollo.apollo.datamodel.ChannelItem;
+import com.dawn.apollo.apollo.bean.ChannelItem;
 import com.dawn.apollo.apollo.db.SQLHelper;
 
 import java.lang.reflect.Method;

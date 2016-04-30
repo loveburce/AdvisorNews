@@ -4,10 +4,8 @@ import android.content.ContentValues;
 import android.util.Log;
 
 import com.dawn.apollo.apollo.dao.ChannelDao;
-import com.dawn.apollo.apollo.datamodel.ChannelItem;
+import com.dawn.apollo.apollo.bean.ChannelItem;
 import com.dawn.apollo.apollo.db.SQLHelper;
-import com.snappydb.DB;
-import com.snappydb.DBFactory;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+def AAVersion = '4.1.0-SNAPSHOT'
 
 android {
     compileSdkVersion 23
@@ -24,6 +26,19 @@ android {
 repositories {
     maven { url "http://dl.bintray.com/populov/maven" }
     mavenCentral()
+    mavenLocal()
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        // replace with the current version of the Android plugin
+        classpath 'com.android.tools.build:gradle:1.5.0'
+        // the latest version of the android-apt plugin
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
 }
 
 dependencies {
@@ -45,4 +60,6 @@ dependencies {
     compile 'com.snappydb:snappydb-lib:0.5.2'
     compile 'com.esotericsoftware.kryo:kryo:2.24.0'
 
+//    apt "org.androidannotations:androidannotations:$AAVersion"
+//    compile "org.androidannotations:androidannotations-api:$AAVersion"
 }

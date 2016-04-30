@@ -30,12 +30,12 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table if not exists \" + TABLE_CHANNEL +\n" +
-                "                \"(_id INTEGER PRIMARY KEY AUTOINCREMENT, \" +\n" +
-                "                ID + \" INTEGER , \" +\n" +
-                "                NAME + \" TEXT , \" +\n" +
-                "                ORDERID + \" INTEGER , \" +\n" +
-                "                SELECTED + \" TEXT)";
+        String sql = "create table if not exists " + TABLE_CHANNEL +
+                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "ID INTEGER, " +
+                "NAME TEXT," +
+                "ORDERID INTEGER, " +
+                "SELECTED TEXT)";
         db.execSQL(sql);
     }
 

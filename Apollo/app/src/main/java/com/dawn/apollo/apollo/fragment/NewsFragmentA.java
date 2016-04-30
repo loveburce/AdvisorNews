@@ -2,7 +2,6 @@ package com.dawn.apollo.apollo.fragment;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -19,12 +19,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.dawn.apollo.apollo.R;
 import com.dawn.apollo.apollo.adapter.NewFragmentAAdapter;
-import com.dawn.apollo.apollo.http.HttpClientRequest;
+import com.dawn.apollo.apollo.bean.NewModel;
+import com.dawn.apollo.apollo.http.volleyokhttp.HttpClientRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class NewsFragmentA extends BaseFragment {
@@ -32,12 +35,21 @@ public class NewsFragmentA extends BaseFragment {
 	private TextView tv_topBarTitle;
 	private RecyclerView recyclerView;
 	private LinearLayoutManager linearLayoutManager;
-	private NewFragmentAAdapter newFragmentAAdapter;
+
 	private SwipeRefreshLayout swipeRefreshLayout;
 	private int lastVisibleItem;
 	//是否正在加载更多的标志
 	private boolean isMoreLoading=false;
 
+	protected ProgressBar mProgressBar;
+	protected HashMap<String, String> url_maps;
+
+	protected HashMap<String, NewModel> newHashMap;
+
+	protected NewFragmentAAdapter newFragmentAAdapter;
+	protected List<NewModel> listsModles;
+	private int index = 0;
+	private boolean isRefresh = false;
 
 	String text;
 	@Override
@@ -54,12 +66,20 @@ public class NewsFragmentA extends BaseFragment {
 		// TODO Auto-generated method stub
 		View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_news_a, null);
 
+		initData();
+		getNewsData();
 
 		return view;
 	}
 
+	private void initData(){
+		listsModles = new ArrayList<NewModel>();
+		url_maps = new HashMap<String, String>();
+		newHashMap = new HashMap<String, NewModel>();
+	}
+
 	private void getNewsData(){
-		String httpurl = getCommonUrl("","");
+		String httpurl = getNewUrl(index + "");
 		HttpClientRequest httpClientRequest = HttpClientRequest.getInstance(getActivity());
 		StringRequest stringRequest = new StringRequest(Request.Method.POST,httpurl,
 				new Response.Listener<String>() {

@@ -1,4 +1,4 @@
-package com.dawn.apollo.apollo.datamodel;
+package com.dawn.apollo.apollo.bean;
 
 /**
  * Created by dawn-pc on 2016/4/18.

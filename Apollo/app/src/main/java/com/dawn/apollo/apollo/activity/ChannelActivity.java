@@ -1,7 +1,6 @@
 package com.dawn.apollo.apollo.activity;
 
 import android.os.Bundle;
-import android.support.annotation.BoolRes;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -11,7 +10,7 @@ import com.dawn.apollo.apollo.customview.DragView.DragAdapter;
 import com.dawn.apollo.apollo.customview.DragView.DragGrid;
 import com.dawn.apollo.apollo.customview.DragView.OtherAdapter;
 import com.dawn.apollo.apollo.customview.DragView.OtherGridView;
-import com.dawn.apollo.apollo.datamodel.ChannelItem;
+import com.dawn.apollo.apollo.bean.ChannelItem;
 
 import java.util.ArrayList;
 import butterknife.ButterKnife;

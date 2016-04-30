@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.dawn.apollo.apollo.R;
-import com.dawn.apollo.apollo.datamodel.ChannelItem;
+import com.dawn.apollo.apollo.bean.ChannelItem;
 
 import java.util.List;
 

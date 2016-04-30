@@ -2,7 +2,7 @@ package com.dawn.apollo.apollo.dao;
 
 import android.content.ContentValues;
 
-import com.dawn.apollo.apollo.datamodel.ChannelItem;
+import com.dawn.apollo.apollo.bean.ChannelItem;
 
 import java.util.List;
 import java.util.Map;
