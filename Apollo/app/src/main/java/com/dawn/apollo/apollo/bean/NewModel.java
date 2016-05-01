@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/4/30.
  */
-public class NewModel extends BaseModle{
+public class NewModel extends BaseModel {
     private String docid;
     private String title;
     private String digest;
@@ -13,8 +13,8 @@ public class NewModel extends BaseModle{
     private String source;
     private String ptime;
     private String tag;
-    private ImagesModle imagesModle;
-    private List<ImagesModle> imgHeadLists;
+    private ImagesModel imagesModle;
+    private List<ImagesModel> imgHeadLists;
 
     public String getTitle() {
         return title;
@@ -72,19 +72,19 @@ public class NewModel extends BaseModle{
         this.tag = tag;
     }
 
-    public ImagesModle getImagesModle() {
+    public ImagesModel getImagesModle() {
         return imagesModle;
     }
 
-    public void setImagesModle(ImagesModle imagesModle) {
+    public void setImagesModle(ImagesModel imagesModle) {
         this.imagesModle = imagesModle;
     }
 
-    public List<ImagesModle> getImgHeadLists() {
+    public List<ImagesModel> getImgHeadLists() {
         return imgHeadLists;
     }
 
-    public void setImgHeadLists(List<ImagesModle> imgHeadLists) {
+    public void setImgHeadLists(List<ImagesModel> imgHeadLists) {
         this.imgHeadLists = imgHeadLists;
     }
 }

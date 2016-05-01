@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/4/30.
  */
-public class ImagesModle extends BaseModle {
+public class ImagesModel extends BaseModel {
     private String docid;
     private String title;
     private List<String> imgList;
