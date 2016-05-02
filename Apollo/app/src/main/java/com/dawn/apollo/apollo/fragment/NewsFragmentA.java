@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.dawn.apollo.apollo.R;
 import com.dawn.apollo.apollo.adapter.NewFragmentAAdapter;
 import com.dawn.apollo.apollo.bean.NewModel;
+import com.dawn.apollo.apollo.http.HttpUtil;
 import com.dawn.apollo.apollo.http.volleyokhttp.HttpClientRequest;
 
 import org.json.JSONException;
@@ -68,6 +69,7 @@ public class NewsFragmentA extends BaseFragment {
 
 		initData();
 		getNewsData();
+		loadNewList();
 
 		return view;
 	}
@@ -76,6 +78,22 @@ public class NewsFragmentA extends BaseFragment {
 		listsModles = new ArrayList<NewModel>();
 		url_maps = new HashMap<String, String>();
 		newHashMap = new HashMap<String, NewModel>();
+	}
+
+	void loadNewList() {
+		String httpurl = getNewUrl(index + "");
+		String result;
+		try {
+			result = HttpUtil.getByHttpURLConnection(httpurl);
+			Log.d("HttpUtil","HttpUtil : "+result);
+//			if (!StringUtils.isEmpty(result)) {
+//				getResult(result);
+//			} else {
+//				swipeLayout.setRefreshing(false);
+//			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void getNewsData(){
