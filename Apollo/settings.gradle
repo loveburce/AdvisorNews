@@ -1,2 +1,0 @@
-include ':app'
-//project(':canrefresh').projectDir = new File('library/canrefresh')
