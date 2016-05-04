@@ -32,7 +32,8 @@ public class GreenDaoGenerator {
             schema.enableKeepSectionsByDefault();
             addUser(schema);
             addPlace(schema);
-            new DaoGenerator().generateAll(schema, "./domain/src/main/java");
+            addChannelItem(schema);
+            new DaoGenerator().generateAll(schema, "./domain/src/main/java-gen");
         }
     }
 
@@ -53,5 +54,14 @@ public class GreenDaoGenerator {
         card.addStringProperty("name");
         card.addStringProperty("pinyin");
         card.addStringProperty("province");
+    }
+
+    private static void addChannelItem(Schema schema) {
+        Entity card = schema.addEntity("ChannelItem");
+        card.addIdProperty().primaryKey();
+        card.addIntProperty("id");
+        card.addStringProperty("name");
+        card.addIntProperty("orderId");
+        card.addIntProperty("selected");
     }
 }

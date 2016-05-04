@@ -3,10 +3,6 @@ package com.micky.commonproj.domain.service;
 
 import com.micky.commonproj.domain.service.response.WeatherResponse;
 
-import org.w3c.dom.UserDataHandler;
-
-import java.util.List;
-
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -20,7 +16,7 @@ import rx.Observable;
  * @Date 2015-12-21 17:22
  * @Version 1.0
  */
-public interface WeatherService {
+public interface DbDataService {
 
     /*@GET("service/getIpInfo.php")
     Call<GetIpInfoResponse> getIpInfo(@Query("ip") String ip);*/

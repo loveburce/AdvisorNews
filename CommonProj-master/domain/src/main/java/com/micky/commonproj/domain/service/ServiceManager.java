@@ -88,7 +88,7 @@ public class ServiceManager {
      */
     public static <T> String getEndPoint(Class<T> t) {
         String endPoint = "";
-        if (t.getName().equals(WeatherService.class.getName())) {
+        if (t.getName().equals(WebDataService.class.getName())) {
             endPoint = Constants.ENDPOINT_WEATHER;
         }
         if ("".equals(endPoint)) {

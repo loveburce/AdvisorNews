@@ -1,4 +1,4 @@
-package com.micky.commonproj.domain.repository;
+package com.micky.commonproj.domain.service.response;
 
 import android.content.Context;
 import android.content.res.AssetManager;
