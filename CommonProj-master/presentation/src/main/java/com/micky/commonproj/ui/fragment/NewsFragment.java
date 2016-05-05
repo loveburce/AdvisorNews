@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -36,55 +37,22 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class NewsFragment extends BaseFragment implements NewsView {
-    @Bind(R.id.mColumnHorizontalScrollView)
-    protected ColumnHorizontalScrollView mColumnHorizontalScrollView;
-    @Bind(R.id.mRadioGroup_content)
-    protected LinearLayout mRadioGroup_content;
-    @Bind(R.id.ll_more_columns)
-    protected LinearLayout ll_more_columns;
-    @Bind(R.id.rl_column)
-    protected RelativeLayout rl_column;
-    @Bind(R.id.button_more_columns)
-    protected ImageView button_more_columns;
-    @Bind(R.id.mViewPager)
-    protected ViewPager mViewPager;
-    @Bind(R.id.shade_left)
-    protected ImageView shade_left;
-    @Bind(R.id.shade_right)
-    protected ImageView shade_right;
-
-
-    /** 屏幕宽度 */
-    private int mScreenWidth = 0;
-    /** Item宽度 */
-    private int mItemWidth = 0;
-
-    /** 用户选择的新闻分类列表 */
-    protected static List<ChannelItem> userChannelLists;
-    /** 请求CODE */
-    public final static int CHANNELREQUEST = 1;
-    /** 调整返回的RESULTCODE */
-    public final static int CHANNELRESULT = 10;
-    /** 当前选中的栏目 */
-    private int columnSelectIndex = 0;
-    private ArrayList<Fragment> fragments;
-
-    private Fragment newfragment;
-    private double back_pressed;
-    public static boolean isChange = false;
+    View rootView;
+    @Bind(R.id.tab_layout)
+    TabLayout tab_layout;
+    @Bind(R.id.info_viewpager)
+    ViewPager info_viewpager;
 
     private NewsFragmentPagerAdapter mAdapetr;
-
-
-    private Context mContext;
-    private View rootView;
+    private List<Fragment> fragments;
+    private NewsFragmentPagerAdapter mPagerAdater;
     private NewsPresenter newPresenter;
+    List<ChannelItem> userChannelLists;
 
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext = context;
     }
 
 
@@ -97,32 +65,10 @@ public class NewsFragment extends BaseFragment implements NewsView {
         newPresenter = new NewsPresenterImpl(this);
         newPresenter.getTitleData();
         initView();
-        initViewPager();
 
         return rootView;
     }
 
-
-    void initView() {
-        ((Activity)mContext).getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
-
-        mScreenWidth = BaseTools.getWindowsWidth(((Activity)mContext));
-        mItemWidth = mScreenWidth / 7;// 一个Item宽度为屏幕的1/7
-        userChannelLists = new ArrayList<ChannelItem>();
-        fragments = new ArrayList<Fragment>();
-    }
-
-
-
-    private void initViewPager() {
-        mAdapetr = new NewsFragmentPagerAdapter(
-                ((BaseActivity)mContext).getSupportFragmentManager());
-        mViewPager.setOffscreenPageLimit(1);
-        mViewPager.setAdapter(mAdapetr);
-        mViewPager.setOnPageChangeListener(pageListener);
-    }
 
     @Override
     public void showProgress() {
@@ -137,126 +83,48 @@ public class NewsFragment extends BaseFragment implements NewsView {
     @Override
     public void setupTitleData(List<ChannelItem> placeList) {
         userChannelLists = placeList;
-        Log.d("userChannelLists","userChannelLists : "+userChannelLists.size());
-        initTabColumn();
-        initFragment();
-    }
-
-
-    /**
-     * 初始化Column栏目项
-     */
-    private void initTabColumn() {
-        mRadioGroup_content.removeAllViews();
-        int count = userChannelLists.size();
-        mColumnHorizontalScrollView.setParam(((BaseActivity) mContext), mScreenWidth, mRadioGroup_content, shade_left,
-                shade_right, ll_more_columns, rl_column);
-        for (int i = 0; i < count; i++) {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mItemWidth,
-                    LayoutParams.WRAP_CONTENT);
-            params.leftMargin = 5;
-            params.rightMargin = 5;
-            // TextView localTextView = (TextView)
-            // mInflater.inflate(R.layout.column_radio_item, null);
-            TextView columnTextView = new TextView(((BaseActivity)mContext));
-            columnTextView.setTextAppearance(((BaseActivity) mContext), R.style.top_category_scroll_view_item_text);
-            // localTextView.setBackground(getResources().getDrawable(R.drawable.top_category_scroll_text_view_bg));
-            columnTextView.setBackgroundResource(R.drawable.radio_buttong_bg);
-            columnTextView.setGravity(Gravity.CENTER);
-            columnTextView.setPadding(5, 5, 5, 5);
-            columnTextView.setId(i);
-            columnTextView.setText(userChannelLists.get(i).getName());
-            columnTextView.setTextColor(getResources().getColorStateList(
-                    R.color.arc_progress_background));
-            if (columnSelectIndex == i) {
-                columnTextView.setSelected(true);
+        Log.d("userChannelLists", "userChannelLists : " + userChannelLists.size());
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                initFragment();
             }
-            columnTextView.setOnClickListener(new View.OnClickListener() {
+        });
 
-                @Override
-                public void onClick(View v) {
-                    for (int i = 0; i < mRadioGroup_content.getChildCount(); i++) {
-                        View localView = mRadioGroup_content.getChildAt(i);
-                        if (localView != v)
-                            localView.setSelected(false);
-                        else {
-                            localView.setSelected(true);
-                            mViewPager.setCurrentItem(i);
-                        }
-                    }
-                }
-            });
-            mRadioGroup_content.addView(columnTextView, i, params);
-        }
+
     }
 
-    /**
-     * 初始化Fragment
-     */
+    private void initView(){
+        //创建Fragment的 ViewPager 自定义适配器
+        mPagerAdater=new NewsFragmentPagerAdapter(getChildFragmentManager());
+
+        info_viewpager.setAdapter(mPagerAdater);
+        tab_layout.setupWithViewPager(info_viewpager);
+    }
+
     private void initFragment() {
-        fragments.clear();
-        int count = userChannelLists.size();
-        for (int i = 0; i < count; i++) {
-             Bundle data = new Bundle();
-            String nameString = userChannelLists.get(i).getName();
-            int cId = userChannelLists.get(i).getCId();
-            NewsListFragment newsListFragment = new NewsListFragment();
-            data.putString("text", nameString);
-            data.putInt("cId", cId);
-             newfragment.setArguments(data);
-            fragments.add(newfragment);
-            // fragments.add(nameString);
-        }
-        mAdapetr.appendList(fragments);
-    }
-
-
-
-    /**
-     * ViewPager切换监听方法
-     */
-    public ViewPager.OnPageChangeListener pageListener = new ViewPager.OnPageChangeListener() {
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
+        fragments = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            NewsListFragment oneFragment=new NewsListFragment();
+            Bundle bundle=new Bundle();
+            bundle.putString("extra",userChannelLists.get(i).getName());
+            oneFragment.setArguments(bundle);
+            fragments.add(oneFragment);
         }
 
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-        }
+        //设置显示的标题
+        mPagerAdater.setTitles(userChannelLists);
+        //设置需要进行滑动的页面Fragment
+        mPagerAdater.setFragments(fragments);
 
-        @Override
-        public void onPageSelected(int position) {
-            mViewPager.setCurrentItem(position);
-            selectTab(position);
-        }
-    };
-
-    /**
-     * 选择的Column里面的Tab
-     */
-    private void selectTab(int tab_postion) {
-        columnSelectIndex = tab_postion;
-        for (int i = 0; i < mRadioGroup_content.getChildCount(); i++) {
-            View checkView = mRadioGroup_content.getChildAt(tab_postion);
-            int k = checkView.getMeasuredWidth();
-            int l = checkView.getLeft();
-            int i2 = l + k / 2 - mScreenWidth / 2;
-            // rg_nav_content.getParent()).smoothScrollTo(i2, 0);
-            mColumnHorizontalScrollView.smoothScrollTo(i2, 0);
-            // mColumnHorizontalScrollView.smoothScrollTo((position - 2) *
-            // mItemWidth , 0);
-        }
-        // 判断是否选中
-        for (int j = 0; j < mRadioGroup_content.getChildCount(); j++) {
-            View checkView = mRadioGroup_content.getChildAt(j);
-            boolean ischeck;
-            if (j == tab_postion) {
-                ischeck = true;
-            } else {
-                ischeck = false;
-            }
-            checkView.setSelected(ischeck);
+        //设置Tablayout
+        //设置TabLayout模式 -该使用Tab数量比较多的情况
+        tab_layout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        //设置自定义Tab--加入图标的demo
+        for(int i=0;i<12;i++){
+            TabLayout.Tab tab = tab_layout.getTabAt(i);
+            tab.setCustomView(mPagerAdater.getTabView(i));
         }
     }
 

@@ -776,6 +776,11 @@
 
     <color name="stick_color_bg">#e2e2e2</color>
 
+    <!--标签TAB未选中的颜色-->
+    <color name="color_unselected">#777777</color>
+    <!--标签Tab选中的颜色-->
+    <color name="color_selected">#1da8fe</color>
+
     <!-- 欢迎页 -->
     <!-- A light Holo shade of blue -->
     <color name="holo_blue_light">#ff33b5e5</color>

@@ -3,79 +3,84 @@ package com.micky.commonproj.ui.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.micky.commonproj.BaseApplication;
+import com.micky.commonproj.R;
+import com.micky.commonproj.domain.model.ChannelItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dawn-pc on 2016/5/5.
  */
-public class NewsFragmentPagerAdapter extends FragmentPagerAdapter {
-    private ArrayList<Fragment> fragments = new ArrayList<Fragment>();;
-    private final FragmentManager fm;
+public class NewsFragmentPagerAdapter extends FragmentStatePagerAdapter {
+    private List<ChannelItem> titles;
+    private LayoutInflater layoutInflater;
 
-    public NewsFragmentPagerAdapter(FragmentManager fm) {
-        super(fm);
-        this.fm = fm;
+    public void setTitles(List<ChannelItem> titles){
+        this.titles = titles;
     }
 
-    public NewsFragmentPagerAdapter(FragmentManager fm,
-                                    ArrayList<Fragment> fragments) {
-        super(fm);
-        this.fm = fm;
-        this.fragments = fragments;
-    }
+    private List<Fragment> fragmentList;
 
-    public void appendList(ArrayList<Fragment> fragment) {
-        fragments.clear();
-        if (!fragments.containsAll(fragment) && fragment.size() > 0) {
-            fragments.addAll(fragment);
-        }
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getCount() {
-        return fragments.size();
+    public NewsFragmentPagerAdapter(FragmentManager fragmentManager){
+        super(fragmentManager);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
+        return fragmentList == null ? null: this.fragmentList.get(position);
     }
+
 
     @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
-    }
-
-    public void setFragments(ArrayList<Fragment> fragments) {
-        if (this.fragments != null) {
-            FragmentTransaction ft = fm.beginTransaction();
-            for (Fragment f : this.fragments) {
-                ft.remove(f);
-            }
-            ft.commit();
-            ft = null;
-            fm.executePendingTransactions();
-        }
-        this.fragments = fragments;
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        // 这里Destroy的是Fragment的视图层次，并不是Destroy Fragment对象
-        super.destroyItem(container, position, object);
+    public int getCount() {
+        return fragmentList == null ? 0: fragmentList.size();
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        if (fragments.size() <= position) {
-            position = position % fragments.size();
+        Fragment fragment=null;
+        try {
+            fragment=(Fragment)super.instantiateItem(container,position);
+        }catch (Exception e){
+
         }
-        Object obj = super.instantiateItem(container, position);
-        return obj;
+        return fragment;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+
+    }
+
+    public List<Fragment> getFragments() {
+        return fragmentList;
+    }
+    public void setFragments(List<Fragment> fragments) {
+        this.fragmentList = fragments;
+    }
+
+    /**
+     * 添加getTabView的方法，来进行自定义Tab的布局View
+     * @param position
+     * @return
+     */
+    public View getTabView(int position){
+        layoutInflater=LayoutInflater.from(BaseApplication.getInstance());
+        View view=layoutInflater.inflate(R.layout.tab_item_layout,null);
+        TextView tv= (TextView) view.findViewById(R.id.textView);
+        tv.setText(titles.get(position).getName());
+        ImageView img = (ImageView) view.findViewById(R.id.imageView);
+        img.setImageResource(R.mipmap.ic_launcher);
+        return view;
     }
 }
