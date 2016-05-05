@@ -5,7 +5,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 
+import com.micky.commonlib.config.Constants;
+
 import java.io.File;
+
 
 /**
  * @Description

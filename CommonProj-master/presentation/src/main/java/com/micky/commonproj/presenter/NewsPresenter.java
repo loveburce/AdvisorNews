@@ -9,7 +9,7 @@ package com.micky.commonproj.presenter;
  * @Date 2015-12-22 13:46
  * @Version 1.0
  */
-public interface NewPresenter extends BasePresenter {
+public interface NewsPresenter extends BasePresenter {
 
     void onRefresh();
 

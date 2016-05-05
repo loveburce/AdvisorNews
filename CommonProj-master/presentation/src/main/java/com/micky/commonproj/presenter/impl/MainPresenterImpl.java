@@ -3,7 +3,7 @@ package com.micky.commonproj.presenter.impl;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.micky.commonlib.utils.Constants;
+import com.micky.commonlib.config.Constants;
 import com.micky.commonlib.utils.RxBus;
 import com.micky.commonproj.BaseApplication;
 import com.micky.commonproj.domain.model.Place;

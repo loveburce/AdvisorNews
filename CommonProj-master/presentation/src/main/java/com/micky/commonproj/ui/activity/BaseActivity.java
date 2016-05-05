@@ -3,6 +3,7 @@ package com.micky.commonproj.ui.activity;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
  * @Team KTEAM
  * @Date 2016-01-04 21:27
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends FragmentActivity {
 //    @Bind(R.id.toolbar) Toolbar mToolBar;
 //    @Bind(R.id.tv_title) TextView mTvTitle;
     private boolean mAutoBindView;

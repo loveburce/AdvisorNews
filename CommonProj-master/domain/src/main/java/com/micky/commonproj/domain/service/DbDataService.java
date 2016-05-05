@@ -28,4 +28,6 @@ public interface DbDataService {
     //http://api.map.baidu.com/telematics/v3/weather?location=%E6%88%90%E9%83%BD&output=json&ak=MPDgj92wUYvRmyaUdQs1XwCf
     @POST("/telematics/v3/weather?output=json")
     Observable<WeatherResponse> getWeatherInfo(@Query("location") String location, @Query("ak") String ak);
+
+
 }

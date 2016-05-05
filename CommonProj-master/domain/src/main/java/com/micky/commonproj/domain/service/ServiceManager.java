@@ -2,7 +2,7 @@ package com.micky.commonproj.domain.service;
 
 import android.content.Context;
 
-import com.micky.commonlib.utils.Constants;
+import com.micky.commonlib.config.Constants;
 
 import org.apache.log4j.Logger;
 

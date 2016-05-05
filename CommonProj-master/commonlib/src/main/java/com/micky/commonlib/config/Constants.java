@@ -1,4 +1,4 @@
-package com.micky.commonlib.utils;
+package com.micky.commonlib.config;
 
 import java.io.File;
 
@@ -28,4 +28,7 @@ public class Constants {
     public static final String BASE_FILE_PATH = "CommonProj";
     public static final String LOG_PATH = BASE_FILE_PATH + File.separator + "log";
     public static final String LOG_FILE = BASE_FILE_PATH + ".log";
+
+
+
 }

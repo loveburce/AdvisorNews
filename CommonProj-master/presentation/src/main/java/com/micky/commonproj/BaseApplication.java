@@ -1,10 +1,9 @@
 package com.micky.commonproj;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.micky.commonlib.utils.Constants;
+import com.micky.commonlib.config.Constants;
 import com.micky.commonlib.utils.CrashHandler;
 import com.micky.commonlib.utils.FileUtils;
 import com.micky.commonproj.domain.DomainInit;

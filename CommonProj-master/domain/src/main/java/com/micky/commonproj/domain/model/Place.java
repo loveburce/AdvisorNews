@@ -7,7 +7,7 @@ package com.micky.commonproj.domain.model;
 /**
  * Entity mapped to table "PLACE".
  */
-public class Place implements Comparable<Place> {
+public class Place {
 
     private Long id;
     private String label;
@@ -74,23 +74,6 @@ public class Place implements Comparable<Place> {
     }
 
     // KEEP METHODS - put your custom methods here
-    @Override
-    public int hashCode() {
-        return pinyin.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Place) {
-            return pinyin.equals(((Place)o).pinyin);
-        }
-        return false;
-    }
-
-    @Override
-    public int compareTo(Place another) {
-        return pinyin.compareTo(another.pinyin);
-    }
     // KEEP METHODS END
 
 }

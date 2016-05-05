@@ -23,7 +23,7 @@ public class GreenDaoGenerator {
      * 如果数据库需要升级,请在DaoMaster中的onUpgrade方法中加入:
      * MigrationHelper.getInstance().migrate(db, IpInfoDao.class, PlaceDao.class，...);
      */
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 1;
 
     public static void main(String[] args) throws Exception {
         if (GENERATE_MODEL) {
@@ -59,7 +59,7 @@ public class GreenDaoGenerator {
     private static void addChannelItem(Schema schema) {
         Entity card = schema.addEntity("ChannelItem");
         card.addIdProperty().primaryKey();
-        card.addIntProperty("id");
+        card.addIntProperty("cId");
         card.addStringProperty("name");
         card.addIntProperty("orderId");
         card.addIntProperty("selected");

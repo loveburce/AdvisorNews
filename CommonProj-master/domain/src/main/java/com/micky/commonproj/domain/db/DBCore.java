@@ -2,6 +2,7 @@ package com.micky.commonproj.domain.db;
 
 import android.content.Context;
 
+
 import com.micky.commonproj.domain.db.dao.DaoMaster;
 import com.micky.commonproj.domain.db.dao.DaoSession;
 

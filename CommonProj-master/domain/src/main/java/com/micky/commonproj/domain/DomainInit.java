@@ -45,7 +45,7 @@ public class DomainInit {
         DBCore.enableQueryBuilderLog();
 
         daoSession = DBCore.getDaoSession();
-//        initChannelItem();
+        initChannelItem();
     }
 
     private static void initChannelItem(){
