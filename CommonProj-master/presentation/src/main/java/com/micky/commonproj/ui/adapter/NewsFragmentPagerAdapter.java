@@ -27,23 +27,26 @@ public class NewsFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     public void setTitles(List<ChannelItem> titles){
         this.titles = titles;
+
     }
 
     private List<Fragment> fragmentList;
 
     public NewsFragmentPagerAdapter(FragmentManager fragmentManager){
         super(fragmentManager);
+        fragmentList = new ArrayList<>();
+        titles = new ArrayList<>();
     }
 
     @Override
     public Fragment getItem(int position) {
-        return fragmentList == null ? null: this.fragmentList.get(position);
+        return fragmentList.size()==0 ? null: this.fragmentList.get(position);
     }
 
 
     @Override
     public int getCount() {
-        return fragmentList == null ? 0: fragmentList.size();
+        return fragmentList.size()==0  ? 0: fragmentList.size();
     }
 
     @Override
@@ -65,8 +68,10 @@ public class NewsFragmentPagerAdapter extends FragmentStatePagerAdapter {
     public List<Fragment> getFragments() {
         return fragmentList;
     }
+
     public void setFragments(List<Fragment> fragments) {
         this.fragmentList = fragments;
+        notifyDataSetChanged();
     }
 
     /**
