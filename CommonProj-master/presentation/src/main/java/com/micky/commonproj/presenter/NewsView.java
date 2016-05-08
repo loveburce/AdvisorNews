@@ -1,8 +1,6 @@
 package com.micky.commonproj.presenter;
 
-import com.micky.commonproj.domain.model.ChannelItem;
-import com.micky.commonproj.domain.model.Place;
-import com.micky.commonproj.domain.service.response.WeatherResponse;
+import com.micky.commonlib.http.model.NewModle;
 
 import java.util.List;
 
@@ -12,5 +10,5 @@ import java.util.List;
 public interface NewsView {
     void showProgress();
     void hideProgress();
-    void setupTitleData(List<ChannelItem> placeList);
+    void setupNewsData(List<NewModle> placeList);
 }

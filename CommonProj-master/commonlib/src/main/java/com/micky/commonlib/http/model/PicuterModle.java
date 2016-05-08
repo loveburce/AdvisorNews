@@ -1,5 +1,5 @@
 
-package com.micky.commonproj.domain.model;
+package com.micky.commonlib.http.model;
 
 public class PicuterModle extends BaseModle {
 

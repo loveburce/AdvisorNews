@@ -13,5 +13,5 @@ public interface NewsPresenter extends BasePresenter {
 
     void onRefresh();
 
-    void getTitleData();
+    void getNewsData(String url);
 }

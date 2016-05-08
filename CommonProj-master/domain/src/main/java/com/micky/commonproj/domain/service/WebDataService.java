@@ -33,5 +33,17 @@ public interface WebDataService {
     @POST("/telematics/v3/weather?output=json")
     Observable<WeatherResponse> getWeatherInfo(@Query("location") String location, @Query("ak") String ak);
 
+    public static final String host = "http://c.m.163.com/";
+    public static final String endUrl = "-20.html";
+    public static final String endDetailUrl = "/full.html";
+    // 头条
+    public static final String TopUrl = host + "nc/article/headline/";
+    public static final String TopId = "T1348647909107";
+
+
+
+    @POST("http://c.m.163.com/nc/article/headline/")
+    Observable<WeatherResponse> getNewsInfo(@Query("location") String location, @Query("ak") String ak);
+
 
 }

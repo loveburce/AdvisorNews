@@ -1,11 +1,9 @@
 package com.micky.commonproj.presenter.impl;
 
+import com.micky.commonlib.http.model.NewModle;
 import com.micky.commonlib.utils.RxBus;
 import com.micky.commonproj.BaseApplication;
-import com.micky.commonproj.domain.model.ChannelItem;
-import com.micky.commonproj.domain.model.Place;
-import com.micky.commonproj.domain.service.response.PlaceRepository;
-import com.micky.commonproj.domain.service.response.TitleRepository;
+import com.micky.commonproj.domain.service.response.WebDataResponse;
 import com.micky.commonproj.presenter.NewsPresenter;
 import com.micky.commonproj.presenter.NewsView;
 
@@ -37,7 +35,6 @@ public class NewsPresenterImpl extends BasePresenterImpl implements NewsPresente
             @Override
             public void call(RxBus.BusEvent rxBusEvent) {
                 if (rxBusEvent instanceof RefreshEvent) {
-//                    getPlaceAndWeatherData("成都");
                 }
             }
         }));
@@ -54,15 +51,16 @@ public class NewsPresenterImpl extends BasePresenterImpl implements NewsPresente
     }
 
     @Override
-    public void getTitleData() {
-        TitleRepository repository = new TitleRepository();
-        mSubscriptions.add(repository.getUserTileList(BaseApplication.getInstance())
+    public void getNewsData(String url) {
+        WebDataResponse repository = new WebDataResponse();
+
+        mSubscriptions.add(repository.getNewsModelList(BaseApplication.getInstance(),url)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<ChannelItem>>() {
+                .subscribe(new Subscriber<List<NewModle>>() {
                     @Override
-                    public void onNext(List<ChannelItem> channelItemList) {
-                        mNewView.setupTitleData(channelItemList);
+                    public void onNext(List<NewModle> newModleList) {
+                        mNewView.setupNewsData(newModleList);
                     }
 
                     @Override
