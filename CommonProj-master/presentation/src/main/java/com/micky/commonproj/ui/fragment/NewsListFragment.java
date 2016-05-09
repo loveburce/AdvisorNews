@@ -22,6 +22,9 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.micky.commonlib.http.model.NewModle;
 import com.micky.commonproj.R;
+import com.micky.commonproj.domain.db.DBCore;
+import com.micky.commonproj.domain.db.dao.DaoSession;
+import com.micky.commonproj.domain.model.ChannelItem;
 import com.micky.commonproj.domain.model.Place;
 import com.micky.commonproj.presenter.NewsPresenter;
 import com.micky.commonproj.presenter.NewsView;
@@ -59,6 +62,9 @@ public class NewsListFragment extends BaseFragment implements BaseSliderView.OnS
     protected HashMap<String, NewModle> newHashMap;
     private int index = 0;
     private boolean isRefresh = false;
+    ChannelItem channelItem;
+    String typeTg;
+    long idKey;
 
 
 
@@ -68,9 +74,23 @@ public class NewsListFragment extends BaseFragment implements BaseSliderView.OnS
         rootView = inflater.inflate(R.layout.fragment_news_list,null);
         ButterKnife.bind(this, rootView);
 
+        Bundle bundle=getArguments();
+        if(bundle!=null){
+            typeTg = bundle.getString("extra");
+            idKey = bundle.getLong("IdKey");
+        }
+
+        DaoSession daoSession = DBCore.getDaoSession();
+        channelItem = daoSession.getChannelItemDao().load(idKey);
+        Log.d("test", "StateChanged =url " + typeTg);
         newsPresenter = new NewsPresenterImpl(this);
-        String url = getNewUrl("0");
-        newsPresenter.getNewsData(url);
+
+        String url = getUrlByParameter(typeTg,index+"");
+        String urls = channelItem.getUrlHead()+channelItem.getUrlKey()+"/"+index+channelItem.getUrlEnd();
+
+        Log.d("test", "StateChanged =url " + url);
+        Log.d("test", "StateChanged =urls " + urls);
+        newsPresenter.getNewsData(url,channelItem.getUrlKey());
 
         initView();
         initData();
@@ -103,8 +123,9 @@ public class NewsListFragment extends BaseFragment implements BaseSliderView.OnS
                     newsListAdapter.notifyItemRemoved(newsListAdapter.getItemCount());
                     isRefresh = true;
                     index = 0;
-                    String url = getNewUrl(index + "");
-                    newsPresenter.getNewsData(url);
+                    String url = channelItem.getUrlHead()+channelItem.getUrlKey()+"/"+index+channelItem.getUrlEnd();
+                    Log.d("test", "StateChanged =url " + url);
+                    newsPresenter.getNewsData(url,channelItem.getUrlKey());
 
                 }
             }
@@ -145,8 +166,10 @@ public class NewsListFragment extends BaseFragment implements BaseSliderView.OnS
                     if (!isRefresh) {
                         isRefresh = true;
                         index += 20;
-                        String url = getNewUrl(index+"");
-                        newsPresenter.getNewsData(url);
+//                        String url = getUrlByParameter(typeTg, index + "");
+                        String url = channelItem.getUrlHead()+channelItem.getUrlKey()+"/"+index+channelItem.getUrlEnd();
+                        Log.d("test", "StateChanged =url " + url);
+                        newsPresenter.getNewsData(url,channelItem.getUrlKey());
                     }
                 }
             }

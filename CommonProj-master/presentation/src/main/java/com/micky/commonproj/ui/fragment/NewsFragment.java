@@ -16,15 +16,10 @@ import com.micky.commonproj.R;
 import com.micky.commonproj.domain.db.DBCore;
 import com.micky.commonproj.domain.db.dao.DaoSession;
 import com.micky.commonproj.domain.model.ChannelItem;
-import com.micky.commonproj.presenter.NewsPresenter;
-import com.micky.commonproj.presenter.NewsView;
 import com.micky.commonproj.ui.adapter.NewsFragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class NewsFragment extends BaseFragment{
     View mView;
@@ -71,7 +66,8 @@ public class NewsFragment extends BaseFragment{
         for(int i=0;i<userChannelLists.size();i++){
             NewsListFragment oneFragment=new NewsListFragment();
             Bundle bundle=new Bundle();
-            bundle.putString("extra",userChannelLists.get(i).getName());
+            bundle.putString("extra",userChannelLists.get(i).getCId()+"");
+            bundle.putLong("IdKey",userChannelLists.get(i).getId());
             oneFragment.setArguments(bundle);
             fragments.add(oneFragment);
         }
@@ -83,6 +79,7 @@ public class NewsFragment extends BaseFragment{
         mPagerAdater.setFragments(fragments);
 
         info_viewpager.setAdapter(mPagerAdater);
+        info_viewpager.setOffscreenPageLimit(1);
         tab_layout.setupWithViewPager(info_viewpager);
 
 

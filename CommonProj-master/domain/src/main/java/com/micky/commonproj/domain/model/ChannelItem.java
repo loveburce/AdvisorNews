@@ -14,6 +14,9 @@ public class ChannelItem {
     private String name;
     private Integer orderId;
     private Integer selected;
+    private String urlHead;
+    private String urlKey;
+    private String urlEnd;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -25,19 +28,25 @@ public class ChannelItem {
         this.id = id;
     }
 
-    public ChannelItem( Integer cId, String name, Integer orderId, Integer selected) {
+    public ChannelItem(Integer cId, String name, Integer orderId, Integer selected, String urlHead, String urlKey, String urlEnd) {
         this.cId = cId;
         this.name = name;
         this.orderId = orderId;
         this.selected = selected;
+        this.urlHead = urlHead;
+        this.urlKey = urlKey;
+        this.urlEnd = urlEnd;
     }
 
-    public ChannelItem(Long id, Integer cId, String name, Integer orderId, Integer selected) {
+    public ChannelItem(Long id, Integer cId, String name, Integer orderId, Integer selected, String urlHead, String urlKey, String urlEnd) {
         this.id = id;
         this.cId = cId;
         this.name = name;
         this.orderId = orderId;
         this.selected = selected;
+        this.urlHead = urlHead;
+        this.urlKey = urlKey;
+        this.urlEnd = urlEnd;
     }
 
     public Long getId() {
@@ -78,6 +87,30 @@ public class ChannelItem {
 
     public void setSelected(Integer selected) {
         this.selected = selected;
+    }
+
+    public String getUrlHead() {
+        return urlHead;
+    }
+
+    public void setUrlHead(String urlHead) {
+        this.urlHead = urlHead;
+    }
+
+    public String getUrlKey() {
+        return urlKey;
+    }
+
+    public void setUrlKey(String urlKey) {
+        this.urlKey = urlKey;
+    }
+
+    public String getUrlEnd() {
+        return urlEnd;
+    }
+
+    public void setUrlEnd(String urlEnd) {
+        this.urlEnd = urlEnd;
     }
 
     // KEEP METHODS - put your custom methods here

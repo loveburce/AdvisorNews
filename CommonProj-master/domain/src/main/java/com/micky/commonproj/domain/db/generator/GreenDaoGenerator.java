@@ -63,5 +63,8 @@ public class GreenDaoGenerator {
         card.addStringProperty("name");
         card.addIntProperty("orderId");
         card.addIntProperty("selected");
+        card.addStringProperty("urlHead");
+        card.addStringProperty("urlKey");
+        card.addStringProperty("urlEnd");
     }
 }

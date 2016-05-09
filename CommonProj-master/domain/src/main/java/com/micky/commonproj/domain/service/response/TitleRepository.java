@@ -1,18 +1,11 @@
 package com.micky.commonproj.domain.service.response;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.micky.commonproj.domain.db.DBCore;
 import com.micky.commonproj.domain.db.dao.DaoSession;
 import com.micky.commonproj.domain.model.ChannelItem;
-import com.micky.commonproj.domain.model.Place;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.util.List;
 
 import rx.Observable;

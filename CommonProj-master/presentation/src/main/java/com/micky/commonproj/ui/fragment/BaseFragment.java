@@ -22,13 +22,114 @@ public class BaseFragment extends Fragment {
         return (BaseActivity) getActivity();
     }
 
-    private String getUrlByParameter(String type, String index, String itemId){
-        if(type.equals("0")){
+    public String getUrlByParameter(String type, String index){
+        String urlString = "";
 
-        }else if(type.equals("0")){
-
+        switch (type){
+            case "1"://头条
+                urlString = Url.TopUrl + Url.TopId + "/" + index + Url.endUrl;
+                break;
+            case "2"://足球
+                urlString = Url.CommonUrl + Url.FootId + "/" + index + Url.endUrl;
+                break;
+            case "3"://娱乐
+                urlString = Url.CommonUrl + Url.YuLeId + "/" + index + Url.endUrl;
+                break;
+            case "4"://体育
+                urlString = Url.CommonUrl + Url.TiYuId + "/" + index + Url.endUrl;
+                break;
+            case "5"://财经
+                urlString = Url.CommonUrl + Url.CaiJingId + "/" + index + Url.endUrl;
+                break;
+            case "6"://科技
+                urlString = Url.CommonUrl + Url.KeJiId + "/" + index + Url.endUrl;
+                break;
+            case "7"://CBA
+                urlString = Url.CommonUrl + Url.CBAId + "/" + index + Url.endUrl;
+                break;
+            case "8"://笑话
+                urlString = Url.CommonUrl + Url.XiaoHuaId + "/" + index + Url.endUrl;
+                break;
+            case "9"://汽车
+                urlString = Url.CommonUrl + Url.QiChiId + "/" + index + Url.endUrl;
+                break;
+            case "10"://时尚
+                urlString = Url.CommonUrl + Url.ShiShangId + "/" + index + Url.endUrl;
+                break;
+            case "11"://北京
+                urlString = Url.Local + Url.BeiJingId + "/" + index + Url.endUrl;
+                break;
+            case "12"://军事
+                urlString = Url.Local + Url.JunShiId + "/" + index + Url.endUrl;
+                break;
+            case "13"://房产
+                urlString = Url.FangChan + Url.FangChanId + "/" + index + Url.endUrl;
+                break;
+            case "14"://游戏
+                urlString = Url.CommonUrl + Url.LvYouId + "/" + index + Url.endUrl;
+                break;
+            case "15"://精选
+                urlString = Url.CommonUrl + Url.JingXuanId + "/" + index + Url.endUrl;
+                break;
+            case "16"://电台
+                urlString = Url.CommonUrl + Url.DianTaiId + "/" + index + Url.endUrl;
+                break;
+            case "17"://情感
+                urlString = Url.CommonUrl + Url.QingGanId + "/" + index + Url.endUrl;
+                break;
+            case "18"://电影
+                urlString = Url.CommonUrl + Url.DianYingId + "/" + index + Url.endUrl;
+                break;
+            case "19"://NBA
+                urlString = Url.CommonUrl + Url.NBAId + "/" + index + Url.endUrl;
+                break;
+            case "20"://数码
+                urlString = Url.CommonUrl + Url.ShuMaId + "/" + index + Url.endUrl;
+                break;
+            case "21"://移动
+                urlString = Url.CommonUrl + Url.YiDongId + "/" + index + Url.endUrl;
+                break;
+            case "22"://彩票
+                urlString = Url.CommonUrl + Url.CaiPiaoId + "/" + index + Url.endUrl;
+                break;
+            case "23"://教育
+                urlString = Url.CommonUrl + Url.JiaoYuId + "/" + index + Url.endUrl;
+                break;
+            case "24"://论坛
+                urlString = Url.CommonUrl + Url.LunTanId + "/" + index + Url.endUrl;
+                break;
+            case "25"://旅游
+                urlString = Url.CommonUrl + Url.LvYouId + "/" + index + Url.endUrl;
+                break;
+            case "26"://手机
+                urlString = Url.CommonUrl + Url.ShouJiId + "/" + index + Url.endUrl;
+                break;
+            case "27"://博客
+                urlString = Url.CommonUrl + Url.BoKeId + "/" + index + Url.endUrl;
+                break;
+            case "28"://社会
+                urlString = Url.CommonUrl + Url.SheHuiId + "/" + index + Url.endUrl;
+                break;
+            case "29"://家居
+                urlString = Url.CommonUrl + Url.JiaJuId + "/" + index + Url.endUrl;
+                break;
+            case "30"://暴雪
+                urlString = Url.CommonUrl + Url.BaoXueId + "/" + index + Url.endUrl;
+                break;
+            case "31"://亲子
+                urlString = Url.CommonUrl + Url.QinZiId + "/" + index + Url.endUrl;
+                break;
+            case "32"://时尚
+                urlString = Url.CommonUrl + Url.ShiShangId + "/" + index + Url.endUrl;
+                break;
+            case "33"://CBA
+                urlString = Url.CommonUrl + Url.CBAId + "/" + index + Url.endUrl;
+                break;
+            case "34"://消息
+                urlString = Url.CommonUrl + Url.MsgId + "/" + index + Url.endUrl;
+                break;
         }
-        return "";
+        return urlString;
     }
 
     public String getNewUrl(String index) {

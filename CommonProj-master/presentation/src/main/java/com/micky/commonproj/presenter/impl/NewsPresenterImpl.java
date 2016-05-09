@@ -51,10 +51,10 @@ public class NewsPresenterImpl extends BasePresenterImpl implements NewsPresente
     }
 
     @Override
-    public void getNewsData(String url) {
+    public void getNewsData(String url,String keyId) {
         WebDataResponse repository = new WebDataResponse();
 
-        mSubscriptions.add(repository.getNewsModelList(BaseApplication.getInstance(),url)
+        mSubscriptions.add(repository.getNewsModelList(BaseApplication.getInstance(),url,keyId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<NewModle>>() {

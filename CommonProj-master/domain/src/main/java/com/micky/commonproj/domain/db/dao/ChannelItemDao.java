@@ -28,6 +28,9 @@ public class ChannelItemDao extends AbstractDao<ChannelItem, Long> {
         public final static Property Name = new Property(2, String.class, "name", false, "NAME");
         public final static Property OrderId = new Property(3, Integer.class, "orderId", false, "ORDER_ID");
         public final static Property Selected = new Property(4, Integer.class, "selected", false, "SELECTED");
+        public final static Property UrlHead = new Property(5, String.class, "urlHead", false, "URL_HEAD");
+        public final static Property UrlKey = new Property(6, String.class, "urlKey", false, "URL_KEY");
+        public final static Property UrlEnd = new Property(7, String.class, "urlEnd", false, "URL_END");
     };
 
 
@@ -47,7 +50,10 @@ public class ChannelItemDao extends AbstractDao<ChannelItem, Long> {
                 "\"C_ID\" INTEGER," + // 1: cId
                 "\"NAME\" TEXT," + // 2: name
                 "\"ORDER_ID\" INTEGER," + // 3: orderId
-                "\"SELECTED\" INTEGER);"); // 4: selected
+                "\"SELECTED\" INTEGER," + // 4: selected
+                "\"URL_HEAD\" TEXT," + // 5: urlHead
+                "\"URL_KEY\" TEXT," + // 6: urlKey
+                "\"URL_END\" TEXT);"); // 7: urlEnd
     }
 
     /** Drops the underlying database table. */
@@ -85,6 +91,21 @@ public class ChannelItemDao extends AbstractDao<ChannelItem, Long> {
         if (selected != null) {
             stmt.bindLong(5, selected);
         }
+ 
+        String urlHead = entity.getUrlHead();
+        if (urlHead != null) {
+            stmt.bindString(6, urlHead);
+        }
+ 
+        String urlKey = entity.getUrlKey();
+        if (urlKey != null) {
+            stmt.bindString(7, urlKey);
+        }
+ 
+        String urlEnd = entity.getUrlEnd();
+        if (urlEnd != null) {
+            stmt.bindString(8, urlEnd);
+        }
     }
 
     /** @inheritdoc */
@@ -101,7 +122,10 @@ public class ChannelItemDao extends AbstractDao<ChannelItem, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // cId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
             cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // orderId
-            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4) // selected
+            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // selected
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // urlHead
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // urlKey
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // urlEnd
         );
         return entity;
     }
@@ -114,6 +138,9 @@ public class ChannelItemDao extends AbstractDao<ChannelItem, Long> {
         entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setOrderId(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
         entity.setSelected(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
+        entity.setUrlHead(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setUrlKey(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setUrlEnd(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
      }
     
     /** @inheritdoc */

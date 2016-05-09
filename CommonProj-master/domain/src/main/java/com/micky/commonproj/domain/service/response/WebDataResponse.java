@@ -1,6 +1,7 @@
 package com.micky.commonproj.domain.service.response;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.micky.commonlib.config.Url;
 import com.micky.commonlib.http.HttpUtil;
@@ -18,14 +19,18 @@ import rx.Subscriber;
  * Created by dawn-pc on 2016/5/8.
  */
 public class WebDataResponse {
-    public Observable<List<NewModle>> getNewsModelList(final Context context, final String url) {
+    public Observable<List<NewModle>> getNewsModelList(final Context context, final String url,final String keyId) {
         return Observable.create(new Observable.OnSubscribe<List<NewModle>>() {
             @Override
             public void call(Subscriber<? super List<NewModle>> subscriber) {
                 try {
                     List<NewModle> newModleList;
                     String result = HttpUtil.getByHttpClient(context, url);
-                    newModleList = NewListJson.instance(context).readJsonNewModles(result, Url.TopId);
+
+                    newModleList = NewListJson.instance(context).readJsonNewModles(result, keyId);
+
+                    Log.d("placeList", "placeListplaceList:result " + result);
+                    Log.d("placeList","placeListplaceList:newModleList "+newModleList.size());
 
                     subscriber.onNext(newModleList);
                 } catch (Exception e) {

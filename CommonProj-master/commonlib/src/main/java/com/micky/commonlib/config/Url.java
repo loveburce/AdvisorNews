@@ -78,6 +78,9 @@ public class Url {
     public static final String FangChan = host + "nc/article/house/";
     // 房产id
     public static final String FangChanId = "5YyX5Lqs";
+
+
+
     // 图集
     public static final String TuJi = host + "photo/api/morelist/0096/4GJ60096/";// 42358.json
     // 图集end
