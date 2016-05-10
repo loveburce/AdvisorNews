@@ -2,6 +2,7 @@ package com.micky.commonproj.ui.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -11,22 +12,29 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.micky.commonproj.R;
 import com.micky.commonproj.domain.db.DBCore;
 import com.micky.commonproj.domain.db.dao.DaoSession;
 import com.micky.commonproj.domain.model.ChannelItem;
+import com.micky.commonproj.ui.activity.NewsChannelActivity;
 import com.micky.commonproj.ui.adapter.NewsFragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class NewsFragment extends BaseFragment{
-    View mView;
-//    @Bind(R.id.tab_layout)
+    View rootView;
+    @Bind(R.id.tab_layout)
     TabLayout tab_layout;
-//    @Bind(R.id.info_viewpager)
+    @Bind(R.id.info_viewpager)
     ViewPager info_viewpager;
+    @Bind(R.id.fragment_news_add_item)
+    ImageButton ib_channelManager;
 
 
     private List<Fragment> fragments;
@@ -43,22 +51,24 @@ public class NewsFragment extends BaseFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(mView==null){
-            mView=inflater.inflate(R.layout.fragment_news,container,false);
-            initViews();
-            initValidata();
-        }
-        return mView;
+        rootView=inflater.inflate(R.layout.fragment_news,container,false);
+        ButterKnife.bind(this, rootView);
+        initValidata();
+        return rootView;
     }
 
-    private void initViews(){
-        tab_layout=(TabLayout)mView.findViewById(R.id.tab_layout);
-        info_viewpager=(ViewPager)mView.findViewById(R.id.info_viewpager);
 
-    }
     private void initValidata(){
+        ib_channelManager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getMyActivity(), NewsChannelActivity.class);
+                getMyActivity().startActivity(intent);
+            }
+        });
+
+
         DaoSession daoSession = DBCore.getDaoSession();
-//                    defaultUserChannels = daoSession.getChannelItemDao().loadAll();
         userChannelLists = daoSession.getChannelItemDao().queryRaw(" where selected = ?",new String[] {"1"});
         Log.d("userChannelLists","userChannelLists : "+userChannelLists.size());
 

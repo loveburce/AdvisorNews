@@ -19,7 +19,7 @@ public class ChannelItemDao extends AbstractDao<ChannelItem, Long> {
     public static final String TABLENAME = "CHANNEL_ITEM";
 
     /**
-     * Properties of entity ChannelItem.<br/>
+     * Properties of entity .<br/>
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {

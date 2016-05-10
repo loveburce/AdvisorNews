@@ -1,5 +1,6 @@
 package com.micky.commonproj.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
@@ -29,6 +30,8 @@ import com.micky.commonproj.domain.model.Place;
 import com.micky.commonproj.presenter.NewsPresenter;
 import com.micky.commonproj.presenter.NewsView;
 import com.micky.commonproj.presenter.impl.NewsPresenterImpl;
+import com.micky.commonproj.ui.activity.BaseActivity;
+import com.micky.commonproj.ui.activity.NewsDetailActivity;
 import com.micky.commonproj.ui.adapter.NewsListAdapter;
 import com.micky.commonproj.ui.adapter.PlaceAdapter;
 import com.micky.commonproj.ui.adapter.WeatherDataAdapter;
@@ -57,7 +60,7 @@ public class NewsListFragment extends BaseFragment implements BaseSliderView.OnS
     @Bind(R.id.fragment_news_swiperefreshlayout)
     SwipeRefreshLayout swipeRefreshLayout;
     NewsListAdapter newsListAdapter;
-
+    List<NewModle> newModles;
     protected HashMap<String, String> url_maps;
     protected HashMap<String, NewModle> newHashMap;
     private int index = 0;
@@ -90,7 +93,7 @@ public class NewsListFragment extends BaseFragment implements BaseSliderView.OnS
 
         Log.d("test", "StateChanged =url " + url);
         Log.d("test", "StateChanged =urls " + urls);
-        newsPresenter.getNewsData(url,channelItem.getUrlKey());
+        newsPresenter.getNewsData(urls,channelItem.getUrlKey());
 
         initView();
         initData();
@@ -167,9 +170,9 @@ public class NewsListFragment extends BaseFragment implements BaseSliderView.OnS
                         isRefresh = true;
                         index += 20;
 //                        String url = getUrlByParameter(typeTg, index + "");
-                        String url = channelItem.getUrlHead()+channelItem.getUrlKey()+"/"+index+channelItem.getUrlEnd();
+                        String url = channelItem.getUrlHead() + channelItem.getUrlKey() + "/" + index + channelItem.getUrlEnd();
                         Log.d("test", "StateChanged =url " + url);
-                        newsPresenter.getNewsData(url,channelItem.getUrlKey());
+                        newsPresenter.getNewsData(url, channelItem.getUrlKey());
                     }
                 }
             }
@@ -180,6 +183,9 @@ public class NewsListFragment extends BaseFragment implements BaseSliderView.OnS
             @Override
             public void onItemClick(View view, int position) {
                 Log.d("test", "item position = " + position);
+                NewModle newModle = newModles.get(position);
+                enterDetailActivity(newModle);
+
             }
 
             @Override
@@ -187,6 +193,23 @@ public class NewsListFragment extends BaseFragment implements BaseSliderView.OnS
 
             }
         });
+    }
+
+    public void enterDetailActivity(NewModle newModle) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("newModle", newModle);
+        Class<?> class1;
+        if (newModle.getImagesModle() != null && newModle.getImagesModle().getImgList().size() > 1) {
+            class1 = NewsDetailActivity.class;
+        } else {
+            class1 = NewsDetailActivity.class;
+        }
+
+
+//        ((BaseActivity) getActivity()).startActivity(class1, bundle, 0);
+         Intent intent = new Intent(getActivity(), class1);
+         intent.putExtras(bundle);
+        ((BaseActivity) getActivity()).startActivity(intent);
     }
 
     @Override
@@ -219,6 +242,7 @@ public class NewsListFragment extends BaseFragment implements BaseSliderView.OnS
     public void setupNewsData(List<NewModle> newModles) {
         swipeRefreshLayout.setRefreshing(false);
         isRefresh = false;
+        this.newModles = newModles;
         Log.d("placeList","placeListplaceList: "+newModles.size());
         newsListAdapter.setData(newModles);
         newsListAdapter.notifyDataSetChanged();

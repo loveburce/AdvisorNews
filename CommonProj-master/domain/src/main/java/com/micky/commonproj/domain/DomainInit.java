@@ -45,19 +45,18 @@ public class DomainInit {
         DBCore.enableQueryBuilderLog();
 
         daoSession = DBCore.getDaoSession();
-//        initChannelItem();
+        initChannelItem();
     }
 
     private static void initChannelItem(){
         defaultUserChannels = new ArrayList<ChannelItem>();
         defaultOtherChannels = new ArrayList<ChannelItem>();
-        defaultUserChannels.add(new ChannelItem(1, "头条", 1, 1,"http://c.m.163.com/nc/article/headline/","T134864790910","-20.html"));
+        defaultUserChannels.add(new ChannelItem(1, "头条", 1, 1,"http://c.m.163.com/nc/article/headline/","T1348647909107","-20.html"));
         defaultUserChannels.add(new ChannelItem(2, "足球", 2, 1,"http://c.m.163.com/nc/article/list/","T1399700447917","-20.html"));
         defaultUserChannels.add(new ChannelItem(3, "娱乐", 3, 1,"http://c.m.163.com/nc/article/list/","T1348648517839","-20.html"));
         defaultUserChannels.add(new ChannelItem(4, "体育", 4, 1,"http://c.m.163.com/nc/article/list/","T1348649079062","-20.html"));
         defaultUserChannels.add(new ChannelItem(5, "财经", 5, 1,"http://c.m.163.com/nc/article/list/","T1348648756099","-20.html"));
         defaultUserChannels.add(new ChannelItem(6, "科技", 6, 1,"http://c.m.163.com/nc/article/list/","T1348649580692","-20.html"));
-        // defaultUserChannels.add(new ChannelItem(7, "图片", 1, 0));
         defaultOtherChannels.add(new ChannelItem(7, "CBA", 1, 0,"http://c.m.163.com/nc/article/list/","T1348649475931","-20.html"));
         defaultOtherChannels.add(new ChannelItem(8, "笑话", 2, 0,"http://c.m.163.com/nc/article/list/","T1350383429665","-20.html"));
         defaultOtherChannels.add(new ChannelItem(9, "汽车", 3, 0,"http://c.m.163.com/nc/article/list/","T1348654060988","-20.html"));
