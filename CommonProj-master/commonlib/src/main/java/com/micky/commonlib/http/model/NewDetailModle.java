@@ -108,4 +108,19 @@ public class NewDetailModle extends BaseModle {
     public void setImgList(List<String> imgList) {
         this.imgList = imgList;
     }
+
+
+    @Override
+    public String toString() {
+        return "NewDetailModle{" +
+                "docid='" + docid + '\'' +
+                ", title='" + title + '\'' +
+                ", source='" + source + '\'' +
+                ", body='" + body + '\'' +
+                ", ptime='" + ptime + '\'' +
+                ", cover='" + cover + '\'' +
+                ", url_mp4='" + url_mp4 + '\'' +
+                ", imgList=" + imgList +
+                '}';
+    }
 }

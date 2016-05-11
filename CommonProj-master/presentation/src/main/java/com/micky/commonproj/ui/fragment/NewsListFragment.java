@@ -3,17 +3,13 @@ package com.micky.commonproj.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
@@ -26,16 +22,12 @@ import com.micky.commonproj.R;
 import com.micky.commonproj.domain.db.DBCore;
 import com.micky.commonproj.domain.db.dao.DaoSession;
 import com.micky.commonproj.domain.model.ChannelItem;
-import com.micky.commonproj.domain.model.Place;
-import com.micky.commonproj.presenter.NewsPresenter;
-import com.micky.commonproj.presenter.NewsView;
-import com.micky.commonproj.presenter.impl.NewsPresenterImpl;
+import com.micky.commonproj.presenter.NewsListPresenter;
+import com.micky.commonproj.presenter.NewsListView;
+import com.micky.commonproj.presenter.impl.NewsListPresenterImpl;
 import com.micky.commonproj.ui.activity.BaseActivity;
 import com.micky.commonproj.ui.activity.NewsDetailActivity;
 import com.micky.commonproj.ui.adapter.NewsListAdapter;
-import com.micky.commonproj.ui.adapter.PlaceAdapter;
-import com.micky.commonproj.ui.adapter.WeatherDataAdapter;
-import com.micky.commonproj.ui.adapter.WeatherExtraAdapter;
 import com.micky.commonproj.ui.view.ItemDecoration;
 
 import java.util.HashMap;
@@ -47,9 +39,9 @@ import butterknife.ButterKnife;
 /**
  * Created by dawn-pc on 2016/5/5.
  */
-public class NewsListFragment extends BaseFragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener, NewsView {
+public class NewsListFragment extends BaseFragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener, NewsListView {
     View rootView;
-    NewsPresenter newsPresenter;
+    NewsListPresenter newsPresenter;
 
     @Bind(R.id.fragment_news_slider)
     SliderLayout sliderLayout;
@@ -86,7 +78,7 @@ public class NewsListFragment extends BaseFragment implements BaseSliderView.OnS
         DaoSession daoSession = DBCore.getDaoSession();
         channelItem = daoSession.getChannelItemDao().load(idKey);
         Log.d("test", "StateChanged =url " + typeTg);
-        newsPresenter = new NewsPresenterImpl(this);
+        newsPresenter = new NewsListPresenterImpl(this);
 
         String url = getUrlByParameter(typeTg,index+"");
         String urls = channelItem.getUrlHead()+channelItem.getUrlKey()+"/"+index+channelItem.getUrlEnd();

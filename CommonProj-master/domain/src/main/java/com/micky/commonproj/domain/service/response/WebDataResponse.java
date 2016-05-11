@@ -5,7 +5,9 @@ import android.util.Log;
 
 import com.micky.commonlib.config.Url;
 import com.micky.commonlib.http.HttpUtil;
+import com.micky.commonlib.http.json.NewDetailJson;
 import com.micky.commonlib.http.json.NewListJson;
+import com.micky.commonlib.http.model.NewDetailModle;
 import com.micky.commonlib.http.model.NewModle;
 //import com.micky.commonproj.domain.http.HttpUtil;
 //import com.micky.commonproj.domain.http.json.NewListJson;
@@ -33,6 +35,24 @@ public class WebDataResponse {
                     Log.d("placeList","placeListplaceList:newModleList "+newModleList.size());
 
                     subscriber.onNext(newModleList);
+                } catch (Exception e) {
+                    subscriber.onError(e);
+                }
+                subscriber.onCompleted();
+            }
+        });
+    }
+
+    public Observable<NewDetailModle> getNewsDetail(final Context context, final String url, final String keyId) {
+        return Observable.create(new Observable.OnSubscribe<NewDetailModle>() {
+            @Override
+            public void call(Subscriber<? super NewDetailModle> subscriber) {
+                try {
+                    String result = HttpUtil.getByHttpClient(context, url);
+                    Log.d("placeList", "placeListplaceList:result " + result);
+                    NewDetailModle newDetailModle = NewDetailJson.instance(context).readJsonNewModles(result, keyId);
+
+                    subscriber.onNext(newDetailModle);
                 } catch (Exception e) {
                     subscriber.onError(e);
                 }

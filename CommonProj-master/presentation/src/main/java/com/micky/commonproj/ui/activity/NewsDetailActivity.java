@@ -3,6 +3,8 @@ package com.micky.commonproj.ui.activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
+import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -16,6 +18,11 @@ import com.micky.commonlib.http.model.NewDetailModle;
 import com.micky.commonlib.http.model.NewModle;
 import com.micky.commonlib.utils.StringUtils;
 import com.micky.commonproj.R;
+import com.micky.commonproj.presenter.NewsDetailPresenter;
+import com.micky.commonproj.presenter.NewsDetailView;
+import com.micky.commonproj.presenter.NewsListPresenter;
+import com.micky.commonproj.presenter.NewsListView;
+import com.micky.commonproj.presenter.impl.NewsDetailPresenterImpl;
 import com.micky.commonproj.ui.customview.htmltextview.HtmlTextView;
 
 import butterknife.Bind;
@@ -25,7 +32,7 @@ import butterknife.OnClick;
 /**
  * Created by dawn-pc on 2016/5/9.
  */
-public class NewsDetailActivity extends BaseActivity{
+public class NewsDetailActivity extends BaseActivity implements NewsDetailView {
     @Bind(R.id.back)
     TextView tv_back;
     @Bind(R.id.title)
@@ -53,12 +60,14 @@ public class NewsDetailActivity extends BaseActivity{
 
     private String imgCountString;
     private NewDetailModle newDetailModle;
+    NewsDetailPresenter newsDetailPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail, true);
         ButterKnife.bind(this);
+        newsDetailPresenter = new NewsDetailPresenterImpl(this);
         initData();
         initView();
     }
@@ -68,7 +77,8 @@ public class NewsDetailActivity extends BaseActivity{
             newModle = (NewModle) getIntent().getExtras().getSerializable("newModle");
             newID = newModle.getDocid();
             newUrl = Url.NewDetail + newID + Url.endDetailUrl;
-            loadData(newUrl);
+            loadData(newUrl, newID);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,9 +94,9 @@ public class NewsDetailActivity extends BaseActivity{
         finish();
     }
 
-    private void loadData(String url) {
+    private void loadData(String newUrl,String newID) {
         if (HttpUtil.isNetworkAvailable(NewsDetailActivity.this)) {
-            loadNewDetailData(url);
+            newsDetailPresenter.getNewsData(newUrl, newID);
         } else {
 //            dismissProgressDialog();
 //            showShortToast(getString(R.string.not_network));
@@ -97,19 +107,35 @@ public class NewsDetailActivity extends BaseActivity{
         }
     }
 
-    public void loadNewDetailData(String url) {
-        String result;
+    @OnClick(R.id.new_img)
+    public void imageMore(View view) {
         try {
-            result = HttpUtil.getByHttpClient(this, url);
-            getResult(result);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("newDetailModle", newDetailModle);
+            if (!"".equals(newDetailModle.getUrl_mp4())) {
+                bundle.putString("playUrl", newDetailModle.getUrl_mp4());
+//                openActivity(VideoPlayActivity_.class, bundle, 0);
+            } else {
+//                openActivity(ImageDetailActivity_.class, bundle, 0);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @UiThread
-    public void getResult(String result) {
-        newDetailModle = NewDetailJson.instance(this).readJsonNewModles(result, newID);
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void setupNewsData(NewDetailModle newDetailModle) {
+        Log.d("NewDetailModle","NewDetailModle : "+newDetailModle.toString());
         if (newDetailModle == null)
             return;
 //        setCacheStr(newUrl, result);
@@ -131,27 +157,27 @@ public class NewsDetailActivity extends BaseActivity{
         content = content.replace("<!--VIDEO#3--></p><p>", "");
         content = content.replace("<!--VIDEO#4--></p><p>", "");
         content = content.replace("<!--REWARD#0--></p><p>", "");
+
+        final String finalContent = content;
         webView.setHtmlFromString(content, false);
+        Log.d("finalContent","finalContent : "+finalContent);
+        Log.d("finalContent","finalContent : "+webView.getVisibility());
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+
+                webView.setHtmlFromString(finalContent, false);
+            }
+        });
+
+
 //        dismissProgressDialog();
-        // webView.loadDataWithBaseURL(null, content, "text/html", "utf-8",
-        // null);
+//         webView.loadDataWithBaseURL(null, content, "text/html", "utf-8",
+//         null);
     }
 
-    @OnClick(R.id.new_img)
-    public void imageMore(View view) {
-        try {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("newDetailModle", newDetailModle);
-            if (!"".equals(newDetailModle.getUrl_mp4())) {
-                bundle.putString("playUrl", newDetailModle.getUrl_mp4());
-//                openActivity(VideoPlayActivity_.class, bundle, 0);
-            } else {
-//                openActivity(ImageDetailActivity_.class, bundle, 0);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     // 监听
     private class MyWebViewClient extends WebViewClient {

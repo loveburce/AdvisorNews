@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by dawn-pc on 2016/5/4.
  */
-public interface NewsView {
+public interface NewsListView {
     void showProgress();
     void hideProgress();
     void setupNewsData(List<NewModle> placeList);

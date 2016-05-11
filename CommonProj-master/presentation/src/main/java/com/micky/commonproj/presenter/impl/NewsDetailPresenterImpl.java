@@ -1,11 +1,14 @@
 package com.micky.commonproj.presenter.impl;
 
+import com.micky.commonlib.http.model.NewDetailModle;
 import com.micky.commonlib.http.model.NewModle;
 import com.micky.commonlib.utils.RxBus;
 import com.micky.commonproj.BaseApplication;
 import com.micky.commonproj.domain.service.response.WebDataResponse;
-import com.micky.commonproj.presenter.NewsPresenter;
-import com.micky.commonproj.presenter.NewsView;
+import com.micky.commonproj.presenter.NewsDetailPresenter;
+import com.micky.commonproj.presenter.NewsDetailView;
+import com.micky.commonproj.presenter.NewsListPresenter;
+import com.micky.commonproj.presenter.NewsListView;
 
 import org.apache.log4j.Logger;
 
@@ -19,12 +22,12 @@ import rx.schedulers.Schedulers;
 /**
  * Created by dawn-pc on 2016/5/4.
  */
-public class NewsPresenterImpl extends BasePresenterImpl implements NewsPresenter {
+public class NewsDetailPresenterImpl extends BasePresenterImpl implements NewsDetailPresenter {
     private final Logger mLogger = Logger.getLogger(getClass());
 
-    private NewsView mNewView;
+    private NewsDetailView mNewView;
 
-    public NewsPresenterImpl(NewsView newView) {
+    public NewsDetailPresenterImpl(NewsDetailView newView) {
         mNewView = newView;
     }
 
@@ -54,13 +57,13 @@ public class NewsPresenterImpl extends BasePresenterImpl implements NewsPresente
     public void getNewsData(String url,String keyId) {
         WebDataResponse repository = new WebDataResponse();
 
-        mSubscriptions.add(repository.getNewsModelList(BaseApplication.getInstance(),url,keyId)
+        mSubscriptions.add(repository.getNewsDetail(BaseApplication.getInstance(),url,keyId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<NewModle>>() {
+                .subscribe(new Subscriber<NewDetailModle>() {
                     @Override
-                    public void onNext(List<NewModle> newModleList) {
-                        mNewView.setupNewsData(newModleList);
+                    public void onNext(NewDetailModle result) {
+                        mNewView.setupNewsData(result);
                     }
 
                     @Override
